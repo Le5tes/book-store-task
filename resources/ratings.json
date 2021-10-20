@@ -1,0 +1,37 @@
+[
+    {
+        "id": "6169b4893b13acaabc357fa0",
+        "bookId": "6169afed7ac8f0645378a047",
+        "comment": "Not so good",
+        "rating": 1
+    },
+    {
+        "id": "6169b48dc8e26c130cfc978a",
+        "bookId": "6169afed7ac8f0645378a047",
+        "comment": "Great",
+        "rating": 5
+
+    },
+    {
+        "id": "6169b4922df368a6506896da",
+        "bookId": "6169afed7ac8f0645378a047",
+        "rating": 3
+    },
+    {
+        "id": "6169b4b38d8f5f84ddc60226",
+        "bookId": "6169b048d0e7df900c15cc71",
+        "comment": "Did not liked it",
+        "rating": 1
+    },
+    {
+        "id": "6169b4b727664974b1f38272",
+        "bookId": "6169b0511aa28622af3ab77d",
+        "comment": "Amazing book",
+        "rating": 5
+    },
+    {
+        "id": "6169b4ba17a87ba68afdd5a8",
+        "bookId": "6169b0511aa28622af3ab77d",
+        "rating": 3
+    }
+]

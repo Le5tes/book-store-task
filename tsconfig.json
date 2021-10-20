@@ -4,6 +4,8 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "strict": false,
-        "outDir": "dist"
+        "outDir": "dist",
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     }
 }
