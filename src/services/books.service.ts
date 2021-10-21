@@ -8,7 +8,7 @@ class BooksService {
 
   async getBooksByParams (params) {
     const result = await dbClient.book.findMany({where: params});
-    return result;
+    return result.map(this.ensurePriceIsTo2DP);
   }
 
   private ensurePriceIsTo2DP(book) {

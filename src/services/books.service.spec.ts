@@ -55,5 +55,15 @@ describe('BooksService', () => {
       expect(dbClient.book.findMany).toHaveBeenCalledWith({where: {author, year_written}});
       expect(result).toEqual([book]);
     });
+
+    it('should ensure the price is given to 2dp', async() => {
+      book.price = new Decimal(12);
+      const author = 'Twain, Mark'
+      const year_written = 1855;
+
+      const result = await booksService.getBooksByParams({author, year_written});
+
+      expect(result[0].price).toEqual('12.00');
+    });
   });
 });
