@@ -6,6 +6,11 @@ class BooksService {
     return this.ensurePriceIsTo2DP(book);
   }
 
+  async getBooksByParams (params) {
+    const result = await dbClient.book.findMany({where: params});
+    return result;
+  }
+
   private ensurePriceIsTo2DP(book) {
     book.price = book.price.toFixed(2);
     return book;

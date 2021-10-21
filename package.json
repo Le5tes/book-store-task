@@ -23,6 +23,8 @@
   "dependencies": {
     "@prisma/client": "^3.2.1",
     "express": "^4.17.1",
+    "express-validator": "^6.13.0",
+    "http-errors": "^1.8.0",
     "prisma": "^3.2.1"
   },
   "devDependencies": {

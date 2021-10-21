@@ -9,7 +9,7 @@ const prisma = new PrismaClient
 const standardisedRatings = ratings.map(rating => ({...rating, comment: rating.comment || null}));
 const standardisedBooks = books.map(book => ({...book, price: book.price.toFixed(2)}));
 const getRatingsforBookId = (id) => standardisedRatings.filter((rating) => rating.bookId === id);
-const mappedBooksWithRatings = standardisedBooks.map((book) => ({...book, ratings: getRatingsforBookId(book.id)}));
+const standardisedBooksWithRatings = standardisedBooks.map((book) => ({...book, ratings: getRatingsforBookId(book.id)}));
 
 describe('/books', () => {
   let server;
@@ -25,7 +25,7 @@ describe('/books', () => {
     await prisma.book.deleteMany({}); // Delete all
   });
 
-  describe('GET', () => {
+  describe('GET by id', () => {
     it('should return a book by id', async () => {
       const res = await server.get('/books/6169b0511aa28622af3ab77d');
 
@@ -37,7 +37,29 @@ describe('/books', () => {
       const res = await server.get('/books/6169b0511aa28622af3ab77d?ratings=true');
 
       expect(res.status).toEqual(200);
-      expect(res.body).toEqual(mappedBooksWithRatings[1]);
+      expect(res.body).toEqual(standardisedBooksWithRatings[1]);
+    });
+  });
+
+  describe('GET with params', () => {
+    it('it should return the books by author', async () => {
+      const res = await server.get('/books?author=Twain,+Mark');
+
+      expect(res.status).toEqual(200);
+      expect(res.body).toEqual([standardisedBooks[5], standardisedBooks[7]]);
+    });
+
+    it('it should return the books by year', async () => {
+      const res = await server.get('/books?year_written=1937');
+
+      expect(res.status).toEqual(200);
+      expect(res.body).toEqual([standardisedBooks[12]]);
+    });
+
+    it('should return 400 if the year is not a number', async() => {
+      const res = await server.get('/books?year_written=book');
+
+      expect(res.status).toEqual(400);
     });
   });
 });

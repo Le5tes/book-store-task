@@ -49,4 +49,41 @@ describe('BooksController', () => {
       expect(booksService.getBookById).toHaveBeenCalledWith(id, true);
     });
   });
+
+  describe('getBooksByParams', () => {
+    it('should call to the service with the params', () => {
+      mockReq.query = {author: 'Twain, Mark', year_written: '1859'};
+
+      booksController.getBooksByParams(mockReq, mockRes);
+
+      expect(booksService.getBooksByParams).toHaveBeenCalledWith({author: 'Twain, Mark', year_written: '1859'});
+    });
+
+    it('should not call with any unexpected params', () => {
+      mockReq.query = {author: 'Twain, Mark', year_written: '1859', setBooks: 'I shouldn\'t be here!'};
+
+      booksController.getBooksByParams(mockReq, mockRes);
+
+      expect(booksService.getBooksByParams).toHaveBeenCalledWith({author: 'Twain, Mark', year_written: '1859'});
+    });
+
+    it('should call with fewer params if in the request', () => {
+      mockReq.query = {author: 'Twain, Mark'};
+
+      booksController.getBooksByParams(mockReq, mockRes);
+
+      expect(booksService.getBooksByParams).toHaveBeenCalledWith({author: 'Twain, Mark'});
+    });
+
+    it('should send 200 status with the response from the service', async () => {
+      const book = {id: '6169b0511aa28622af3ab77d', title: 'War and Peace'};
+      (booksService.getBooksByParams as jest.Mock).mockResolvedValue([book]);
+      mockReq.query = {author: 'Twain, Mark'};
+      
+      await booksController.getBooksByParams(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.send).toHaveBeenCalledWith([book]);
+    });
+  });
 });

@@ -6,9 +6,10 @@ import { booksService } from './books.service';
 jest.mock('../database-client/database-client', () => ({ __esModule: true, dbClient: mockDeep<PrismaClient>() }));
 
 describe('BooksService', () => {
+  let book;
+
   describe('getBookById', () => {
     let id: string;
-    let book;
 
     beforeEach(() => {
       id = '6169b0511aa28622af3ab77d';
@@ -36,6 +37,23 @@ describe('BooksService', () => {
       const result = await booksService.getBookById(id);
 
       expect(result.price).toEqual('12.00');
+    });
+  });
+
+  describe('getBooksByParams', () => {
+    beforeEach(() => {
+      book = {id: '6169b0511aa28622af3ab77d', title: 'War and Peace', price: new Decimal(12.99)};
+      (dbClient.book.findMany as jest.Mock).mockResolvedValue([book]);
+    });
+
+    it('should make a call to the database to retrieve the books using the parameters', async() => {
+      const author = 'Twain, Mark'
+      const year_written = 1855;
+
+      const result = await booksService.getBooksByParams({author, year_written});
+    
+      expect(dbClient.book.findMany).toHaveBeenCalledWith({where: {author, year_written}});
+      expect(result).toEqual([book]);
     });
   });
 });
