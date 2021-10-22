@@ -23,18 +23,18 @@ or alternately on MAC-OS see [How to use Homebrew to install Postgres](https://w
 ``` $ npm install ```
 
 #### Apply database schema
-```npx prisma db push```
+``` $ npx prisma db push```
 
 #### (Optional) Preload the database from initial source 
-```npm run load-database```
+``` $ npm run load-database```
 
 (See data in the resources folder)
 
 #### To run tests
-```npm test```
+``` $ npm test```
 
 #### To start server
-```npm start```
+``` $ npm start```
 
 ## Endpoints
 ### GET /books/:id
