@@ -7,7 +7,8 @@ By default the project attempts to authenticarte using the user 'postgres' and p
 In production setup the database connection should be set in the DATABASE_URL environment variable.
 The project expects a database named bookstore to be available to this user.
 
-For more info on setting up postgres see [Getting Started with Postgres](https://www.postgresqltutorial.com/postgresql-getting-started/)
+For more info on setting up postgres see [Getting Started with Postgres](https://www.postgresqltutorial.com/postgresql-getting-started/), 
+or alternately on MAC-OS see [How to use Homebrew to install Postgres](https://wiki.postgresql.org/wiki/Homebrew).
 
 ## Setup
 #### Clone this repository:
