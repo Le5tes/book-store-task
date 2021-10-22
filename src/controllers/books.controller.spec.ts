@@ -7,7 +7,7 @@ describe('BooksController', () => {
   let mockRes;
 
   beforeEach(() => {
-    mockReq = { params: {}, query: {} };
+    mockReq = { params: {}, query: {}, body: undefined };
     mockRes = { status: jest.fn(), send: jest.fn() };
   
     mockRes.status.mockReturnValue(mockRes);
@@ -15,6 +15,8 @@ describe('BooksController', () => {
 
   afterEach(() => {
     (booksService.getBookById as jest.Mock).mockReset();
+    (booksService.getBooksByParams as jest.Mock).mockReset();
+    (booksService.createBook as jest.Mock).mockReset();
   });
   
   describe('getBookById', () => {
@@ -84,6 +86,64 @@ describe('BooksController', () => {
 
       expect(mockRes.status).toHaveBeenCalledWith(200);
       expect(mockRes.send).toHaveBeenCalledWith([book]);
+    });
+  });
+
+  describe('createBook', () => {
+    let book;
+    beforeEach(() => {
+      book = {id: '6169b0511aa28622af3ab77d', title: 'War and Peace'};
+      mockReq.body = book;
+    });
+
+    it('should call to the service to create the book', () => {
+      booksController.createBook(mockReq, mockRes);
+
+      expect(booksService.createBook).toHaveBeenCalledWith(book);
+    });
+
+    it('should not send extra properties to the service', () => {
+      mockReq.body = {...book, extra: 'I shouln\'t be here!'};
+
+      booksController.createBook(mockReq, mockRes);
+
+      expect(booksService.createBook).toHaveBeenCalledWith(book);
+    })
+
+    it('should send 201 status', async() => {
+      await booksController.createBook(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.send).toHaveBeenCalled();
+    });
+  });
+  
+  describe('updateBook', () => {
+    let book;
+    beforeEach(() => {
+      book = {id: '6169b0511aa28622af3ab77d', title: 'War and Peace'};
+      mockReq.body = book;
+    });
+
+    it('should call to the service to update the book', () => {
+      booksController.updateBook(mockReq, mockRes);
+
+      expect(booksService.updateBook).toHaveBeenCalledWith(book);
+    });
+
+    it('should not send extra properties to the service', () => {
+      mockReq.body = {...book, extra: 'I shouln\'t be here!'};
+
+      booksController.updateBook(mockReq, mockRes);
+
+      expect(booksService.updateBook).toHaveBeenCalledWith(book);
+    })
+
+    it('should send 200 status', async() => {
+      await booksController.updateBook(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.send).toHaveBeenCalled();
     });
   });
 });

@@ -1,5 +1,5 @@
-import createError from 'http-errors';
 import { validationResult } from 'express-validator';
+import { ValidationError } from '../../errors/validation.error';
 
 export const validate = (req, res, next) => {
   const errors = validationResult(req);
@@ -7,5 +7,5 @@ export const validate = (req, res, next) => {
     return next();
   }
 
-  throw createError(400, errors.mapped());
+  throw new ValidationError(errors.mapped());
 }

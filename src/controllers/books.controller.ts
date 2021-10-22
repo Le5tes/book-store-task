@@ -10,10 +10,25 @@ class BooksController {
 
   async getBooksByParams(req, res) {
     const {author, year_written} = req.query;
-
     const queryParams = {author, year_written};
 
     res.status(200).send(await booksService.getBooksByParams(queryParams));
+  }
+
+  async createBook(req,res) {
+    const {id, title, author, year_written, edition, price} = req.body;
+
+    await booksService.createBook({id, title, author, year_written, edition, price});
+
+    res.status(201).send();
+  }
+
+  async updateBook(req,res) {
+    const {id, title, author, year_written, edition, price} = req.body;
+
+    await booksService.updateBook({id, title, author, year_written, edition, price});
+
+    res.status(200).send();
   }
 }
 

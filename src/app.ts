@@ -1,16 +1,13 @@
 import express from "express";
+import { exceptionHandler } from "./middlewares/exception-handler/excpetion-handler";
 import { bookRoutes } from "./routes/books.route";
 
 export const app = express();
-const PORT = process.env.PORT || 8080;
+
+
+app.use(express.json());
 
 app.use('/books', bookRoutes);
 
-app.get('/', (req,res) => {
-    res.status(200).send('HELLO!');
-});
+app.use(exceptionHandler);
 
-
-// app.listen(PORT, () => {
-//     console.log(`starting app on port: ${PORT}`);
-// });

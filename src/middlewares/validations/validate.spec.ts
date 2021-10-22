@@ -24,7 +24,7 @@ describe('validate', () => {
     expect(next).toHaveBeenCalled();
   });
 
-  it('should throw a 400 error if validation failures', () => {
+  it('should throw a 400 error if validation fails', () => {
     errorsMock.isEmpty.mockReturnValue(false);
 
     expect(() => validate({}, {}, next)).toThrow();
